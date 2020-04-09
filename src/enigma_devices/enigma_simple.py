@@ -3,8 +3,30 @@ import random
 
 
 class enigma_simple:
-    def __init__(self, rotor_1, rotor_2, rotor_3, reflector):
-        pass
+    def __init__(self, rotor_1, rotor_1_position, rotor_2, rotor_2_position, rotor_3, rotor_3_position, reflector):
+        """
+        Constructor for a simple Enigma
+
+        :param rotor_1: the right rotor which rotates after each letter
+        :param rotor_1_position: the position of the right rotor (1-26)
+        :param rotor_2: the middle rotor which rotates after each full rotation of the right rotor
+        :param rotor_2_position: the position of the middle rotor (1-26)
+        :param rotor_3: the left rotor which rotates after each full rotation of the middle rotor
+        :param rotor_3_position: the position of the left rotor (1-26)
+        :param reflector: the reflector which guides the current from one letter to another but never to itself
+        """
+        # set rotors
+        self.rotor_1 = rotor_1
+        self.rotor_2 = rotor_2
+        self.rotor_3 = rotor_3
+
+        # set rotor positions
+        self.rotor_1_position = rotor_1_position
+        self.rotor_2_position = rotor_2_position
+        self.rotor_3_position = rotor_3_position
+
+        # set reflector
+        self.reflector = reflector
 
     def encrypt_letter(self):
         pass
@@ -53,9 +75,16 @@ class reflector:
                     mapping_string += (self.mapping_dict[key])
                 self.mapping = mapping_string
 
+        # check if mapping maps to itself
+        if mapping:
+            print("Mapping was given")
+            self.mapping = mapping
+            for idx, letter in enumerate(alphabet):
+                if letter == self.mapping[idx]:
+                    raise Exception("Reflector cannot map to itself!")
+
     def __str__(self):
-        print("Alphabet: \t" + self.alphabet)
-        print("Mapping: \t" + self.mapping)
+        return ("Alphabet: \t" + self.alphabet + "\n" + "Mapping: \t" + self.mapping)
 
 
 def list2String(letter_list):
